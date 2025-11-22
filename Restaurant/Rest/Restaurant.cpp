@@ -5,7 +5,8 @@ using namespace std;
 
 #include "Restaurant.h"
 #include "..\Events\ArrivalEvent.h"
-
+#include "../linkedStack.h"
+#include "../linkedQueue.h"
 
 Restaurant::Restaurant() 
 {

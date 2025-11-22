@@ -6,6 +6,12 @@
 #include "..\GUI\GUI.h"
 #include "..\Generic_DS\Queue.h"
 #include "..\Events\Event.h"
+#include "../linkedStack.h"
+#include "../ArrayStack.h"
+#include "../linkedQueue.h"
+#include "../QueueADT.h"
+#include "../StackADT.h"
+#include "../CircularArrayQueue.h"
 
 
 #include "Order.h"
@@ -16,11 +22,18 @@ class Restaurant
 private:
 	GUI *pGUI;
 	Queue<Event*> EventsQueue;	//Queue of all events that will be loaded from file
-
-	
+	/*priQueue<Order*> VIP_waiting;*/
+	Queue<Order*> Vegan_waiting;
+	Queue<Order*> Normal_waiting;
+	Queue<Order*> In_Service;
+	ArrayStack<Order*> Serviced;
+	Queue<Cook*> VIP_cook;
+	Queue<Cook*> Vegan_cook;
+	Queue<Cook*> Normal_cook;
+	/*priQueue<Cook*> In_break;*/
 	/// ==> 
 	//	DEMO-related members. Should be removed in phases 1&2
-	Queue<Order*> DEMO_Queue;	//Important: This is just for demo
+	/*Queue<Order*> DEMO_Queue;*/	//Important: This is just for demo
 	/// ==>
 	
 	
