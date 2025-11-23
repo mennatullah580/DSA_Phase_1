@@ -2,7 +2,15 @@
 #define __ORDER_H_
 
 #include "..\Defs.h"
-
+#include <iostream>
+using namespace std;
+enum ORD_TYPE	//types of orders
+{
+	NRMo,	
+	Vegano,	
+	VIPo,	
+	
+};
 class Order
 {
 
@@ -11,18 +19,13 @@ protected:
 	ORD_TYPE type;		//order type: Normal, vegan, VIP
 	ORD_STATUS status;	//waiting, in-service, done
 	int Distance;	//The distance (in meters) between the order location and the resturant 
-	                
+	int odrdersize; //number of dishes in the order                
 	double totalMoney;	//Total order money
 
 	int ArrTime, ServTime, FinishTime;	//arrival, service start, and finish times
-	
-	
-	//
-	// TODO: Add More Data Members As Needed
-	//
 
 public:
-	Order(int ID, ORD_TYPE r_Type);
+	Order(int ID, ORD_TYPE r_Type, int distance, int money, int size, int time);
 	virtual ~Order();
 
 	int GetID();
@@ -34,10 +37,15 @@ public:
 
 	void setStatus(ORD_STATUS s);
 	ORD_STATUS getStatus() const;
-	
-	//
-	// TODO: Add More Member Functions As Needed
-	//
+	void setOrderSize(int s);
+	int getOrderSize() const;
+	void setMoney(double m);
+	double getMoney() const;
+	void setTime(int at, int st, int ft);
+	int getTime(int& at, int& st, int& ft) const;
+
+
+
 
 };
 
