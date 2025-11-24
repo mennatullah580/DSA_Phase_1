@@ -105,6 +105,9 @@
     <ClInclude Include="GUI\GUI.h" />
     <ClInclude Include="LinkedQueue.h" />
     <ClInclude Include="LinkedStack.h" />
+    <ClInclude Include="PriNodeh.h" />
+    <ClInclude Include="priorityqueue.h" />
+    <ClInclude Include="PriQueue.h" />
     <ClInclude Include="QueueADT.h" />
     <ClInclude Include="Rest\Cook.h" />
     <ClInclude Include="Rest\Order.h" />

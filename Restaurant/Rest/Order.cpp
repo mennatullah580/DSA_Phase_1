@@ -55,23 +55,22 @@ double Order:: getMoney() const
 }
 void Order:: setOrderSize(int s)
 {
-	odrdersize > 0;
+	ordersize > 0;
 }	
 int Order:: getOrderSize() const
 {
-	return odrdersize;
+	return ordersize;
 }
-void Order:: setTime(int at, int st, int ft)
+void Order:: setArrTime(int at)
 {
 	ArrTime = at;
-	ServTime = st;
-	FinishTime = ft;
+
 }
-int Order:: getTime(int& at, int& st, int& ft) const
+
+
+int Order:: getArrTime() const
 {
-	at = ArrTime;
-	st = ServTime;
-	ft = FinishTime;
+	return ArrTime;
 }
 
 

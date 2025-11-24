@@ -15,9 +15,13 @@ int cookID;
 
 
 
-Order* CreateRandomOrder(int id5, ORD_TYPE type)
+
+
+Order* CreateRandomOrder(int id, int dis , int size , int time , int money)
 {
 
+	ORD_TYPE type;
+	
 	int r = rand() % 3;
 	switch (r)
 	{
@@ -31,8 +35,40 @@ Order* CreateRandomOrder(int id5, ORD_TYPE type)
 		type = TYPE_VIP;
 		break;
 	}
-	return new Order(id5, type);
+	return new Order(id, type, size , dis , time , money);
 }
+
+
+
+int Restaurant::calc_vipweight(int size , int price , int arrival_time)
+{
+	
+	int weight = (size + price) / arrival_time;
+
+	return weight;
+	
+}
+
+void Restaurant::AddOrder(Order*& ord)
+{
+
+
+	switch (ord->GetType()) {
+	case TYPE_NRM:
+		normal_orders.enqueue(ord);
+		break;
+	case TYPE_VGAN:
+		vegan_orders.enqueue(ord);
+		break;
+	case TYPE_VIP:
+		
+		int weight = calc_vipweight(ord->getOrderSize(),ord->getMoney(),ord->getArrTime());
+		
+		vip_orders.enqueue(ord, weight);
+	}
+
+}
+
 
 
 
@@ -96,34 +132,15 @@ Restaurant::~Restaurant() // destructor
 //To add orders it should call function  void GUI::AddToDrawingList(Order* pOrd);
 //To add Cooks it should call function  void GUI::AddToDrawingList(Cook* pCc);
 
-
-
-void Restaurant::AddOrder(Order* ord)
+void Restaurant::FillDrawingList()
 {
+	pGUI->ResetDrawingList();
+	
+}
 
 
-	switch (ord->GetType()) {
-	case TYPE_NRM:
-
-		break;
-	case TYPE_VGAN:
-
-		break;
-	case TYPE_VIP:
 
 
-	}
-
-
-	void Restaurant::FillDrawingList()
-	{
-		pGUI->ResetDrawingList();
-
-		pGUI->AddToDrawingList(CreateRandomOrder(orderID, TYPE_NRM));
-		pGUI->AddToDrawingList(CreateRandomOrder(orderID, TYPE_VGAN));
-		pGUI->AddToDrawingList(CreateRandomOrder(orderID, TYPE_VIP));
-
-	}
 
 
 
