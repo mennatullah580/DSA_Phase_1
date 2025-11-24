@@ -126,6 +126,15 @@
     <ClInclude Include="CircularArrayQueue.h">
       <Filter>Generic_DS</Filter>
     </ClInclude>
+    <ClInclude Include="PriNodeh.h">
+      <Filter>Generic_DS</Filter>
+    </ClInclude>
+    <ClInclude Include="PriQueue.h">
+      <Filter>Generic_DS</Filter>
+    </ClInclude>
+    <ClInclude Include="priorityqueue.h">
+      <Filter>Generic_DS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Demo_Main.cpp" />
