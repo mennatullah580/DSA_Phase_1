@@ -34,18 +34,18 @@ void Cook::setType(ORD_TYPE t)
 {
 	type = t;
 }
-//void Cook::setSpeed(int s)
-//{
-//	speed = s;
-//}
+void Cook::setSpeed(int s)
+{
+	speed = s;
+}
 int Cook::getSpeed() const
 {
 	return speed;
 }
-//void Cook::setBreaks(int br)
-//{
-//	breakduration = br;
-//}
+void Cook::setBreaks(int br)
+{
+	breakduration = br;
+}
 int Cook::getBreaks() const
 {
 	return breakduration;

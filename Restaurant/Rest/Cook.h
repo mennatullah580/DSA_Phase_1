@@ -23,8 +23,8 @@ public:
 	ORD_TYPE GetType() const;
 	void setID(int);
 	void setType(ORD_TYPE) ;
-	void setSpeed();
+	void setSpeed(int s);
 	int getSpeed() const;
-	void setBreaks();
+	void setBreaks(int br);
 	int getBreaks() const;
 };
