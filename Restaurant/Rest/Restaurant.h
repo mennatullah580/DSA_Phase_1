@@ -30,6 +30,7 @@ private:
 	Queue<Cook*> VIP_cook;
 	Queue<Cook*> Vegan_cook;
 	Queue<Cook*> Normal_cook;
+	//new
 	/*priQueue<Cook*> In_break;*/
 	/// ==> 
 	//	DEMO-related members. Should be removed in phases 1&2
