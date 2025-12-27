@@ -89,16 +89,10 @@ public:
 	void handleOvertime();           // Check and activate overtime if needed
 	void handleInjuredCooks();       // Process injured cooks, check for forced work
 	
-	// ========== PHASE 2: ORDER ASSIGNMENT & COMPLETION ==========
-	void assignOrderToCook(Order* order, Cook* cook, int currentTime);
-	void processCompletedOrders(int currentTime); // Check for finished orders and process them
-	
-	// ========== GUI & DISPLAY ==========
-	void FillDrawingList();          // Updates GUI drawing list with current state
-};
+	Cook* CreateCook(int speed, int breakTime, ORD_TYPE type, int id); // Creates Cook instances to help finish orders
 
-// ========== HELPER TEMPLATE FUNCTIONS ==========
-// These are used for counting items in queues
+	
+	~Restaurant(); // destructor
 
 template<typename Q, typename T>
 int GetQueueCount(Q& q);
