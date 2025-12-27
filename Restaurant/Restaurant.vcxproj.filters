@@ -141,6 +141,12 @@
     <ClInclude Include="PromotionEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
+    <ClInclude Include="Dynamic behaviour.h">
+      <Filter>Restaurant</Filter>
+    </ClInclude>
+    <ClInclude Include="Cookassaignment.h">
+      <Filter>Restaurant</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Demo_Main.cpp" />

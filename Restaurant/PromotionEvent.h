@@ -3,14 +3,13 @@
 
 #include "Events/Event.h"
 
-
-class PromotionEvent : public Event 
+class PromotionEvent : public Event
 {
 private:
     int ExtraMoney;
 public:
     PromotionEvent(int ts, int id, int extra);
-    void Execute(Restaurant* pRest) override;
+    void Execute(Restaurant* pRest) ;
 };
 
 #endif
