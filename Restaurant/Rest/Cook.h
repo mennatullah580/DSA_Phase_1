@@ -3,28 +3,34 @@
 #include "..\Defs.h"
 #include	<iostream>
 using namespace std;
-enum ORD_TYPE 
-{
-	NRMc,
-	VEGANc,
-	VIPc,
-};
 #pragma once
 class Cook
 {
-	int ID;
-	ORD_TYPE type;	//for each order type there is a corresponding type (VIP, Normal, Vegan)
+	int ID; // cook ID
+	
+	ORD_TYPE type;	//for each order type there is a corresponding cook type (VIP, Normal, Vegan)
+	
 	int speed;		//dishes it can prepare in one clock tick (in one timestep)
-	int breakduration;
+	
+	int breakduration; // time needed for this cook to take a break
 public:
-	Cook();
-	virtual ~Cook();
-	int GetID() const;
-	ORD_TYPE GetType() const;
-	void setID(int);
-	void setType(ORD_TYPE) ;
-	void setSpeed(int s);
-	int getSpeed() const;
-	void setBreaks(int br);
-	int getBreaks() const;
+	Cook(); // constructor
+	
+	virtual ~Cook(); // destructor (virtual as class is inherited)
+	
+	int GetID() const; // id getter
+	
+	ORD_TYPE GetType() const; // type getter
+	
+	void setID(int); //ID setter
+	
+	void setType(ORD_TYPE) ; // type setter
+	
+	void setSpeed(int s); // speed setter
+	
+	int getSpeed() const;//speed getter
+	
+	void setBreaks(int br); // Breaks setter
+	
+	int getBreaks() const; //Breaks getter
 };

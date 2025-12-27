@@ -11,15 +11,11 @@ enum ORD_TYPE	//types of orders
 	TYPE_VGAN,	//vegan
 	TYPE_VIP,	//VIP
 	TYPE_CNT	//Number of types
-
 };
 
-enum ORD_STATUS	//order status
+enum ORD_STATUS
 {
-	WAIT,	//waiting to be served
-	SRV,	//In-service but not delivered (not finished) yet
-	DONE,	//Delivered (finished) to its destination
-	ORD_STATUS_CNT
+	WAIT, SRV, DONE
 };
 
 

@@ -4,45 +4,52 @@
 #include "..\Defs.h"
 #include <iostream>
 using namespace std;
-enum ORD_TYPE	//types of orders
-{
-	NRMo,	
-	Vegano,	
-	VIPo,	
-	
-};
+
 class Order
 {
 
 protected:
 	int ID;         //Each order has a unique ID (from 1 --> 999 )
-	ORD_TYPE type;		//order type: Normal, vegan, VIP
+
+	char type;		//order type: Normal, vegan, VIP
+
 	ORD_STATUS status;	//waiting, in-service, done
+
 	int Distance;	//The distance (in meters) between the order location and the resturant 
+
 	int ordersize; //number of dishes in the order                
+
 	double totalMoney;	//Total order money
 
 	int ArrTime, ServTime, FinishTime;	//arrival, service start, and finish times
 
 public:
-	Order(int ID, ORD_TYPE r_Type, int distance, int money, int size, int time);
-	virtual ~Order();
+	Order(int ID, char r_Type, int distance, double money, int size, int time); // constructor
+	virtual ~Order(); // destroctor (virtual as class is inherited)
 
-	int GetID();
+	int GetID(); // ID getter
 
-	ORD_TYPE GetType() const;
+	char GetType() const; // type getter
 
-	void SetDistance(int d);
-	int GetDistance() const;
+	void SetDistance(int d); // distance setter
+	
+	int GetDistance() const; // distance getter
 
-	void setStatus(ORD_STATUS s);
-	ORD_STATUS getStatus() const;
-	void setOrderSize(int s);
-	int getOrderSize() const;
-	void setMoney(double m);
-	double getMoney() const;
-	void setArrTime(int at);
-	int getArrTime() const;
+	void setStatus(ORD_STATUS s); // status setting
+
+	ORD_STATUS getStatus() const; // getting status
+
+	void setOrderSize(int s); // set size
+
+	int getOrderSize() const; // get size
+
+	void setMoney(double m); //set money
+
+	double getMoney() const; // get money
+
+	void setArrTime(int at); // set arrival time
+
+	int getArrTime() const; // get arrival time
 
 
 

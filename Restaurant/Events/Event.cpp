@@ -1,25 +1,30 @@
 #include "Event.h"
 
-
-Event::Event(int eTime, int ordID)
+Event::Event(char type,int eTime, int ordID)  // constructor
 {
-	EventTime = eTime;
-	OrderID	= ordID;
+    Type = type;
+    EventTime = eTime; //ts
+    OrderID = ordID;
 }
 
 
-int Event::getEventTime()
+char Event::getType() const // type getter
 {
-	return EventTime;
-}
-int Event::getOrderID()
-{
-	return OrderID;
+    return Type;
 }
 
-
-Event::~Event()
-{
-
+int Event::getEventTime() const // time step getter
+{ 
+    return EventTime; 
 }
+
+int Event::getOrderID()  // ID getter
+{
+    return OrderID; 
+}
+
+Event::~Event() // destructor
+{
+}
+
 

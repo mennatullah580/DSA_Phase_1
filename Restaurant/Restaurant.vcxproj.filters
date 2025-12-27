@@ -135,6 +135,12 @@
     <ClInclude Include="priorityqueue.h">
       <Filter>Generic_DS</Filter>
     </ClInclude>
+    <ClInclude Include="CancelEvent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="PromotionEvent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Demo_Main.cpp" />
@@ -261,6 +267,12 @@
     <ClCompile Include="Rest\Cook.cpp">
       <Filter>Restaurant</Filter>
     </ClCompile>
+    <ClCompile Include="CancelEvent.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="PromotionEvent.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMUgraphicsLib\Manual.txt">
@@ -268,6 +280,9 @@
     </Text>
     <Text Include="CMUgraphicsLib\Readme.txt">
       <Filter>CMUGraphicsLib</Filter>
+    </Text>
+    <Text Include="testFile.txt">
+      <Filter>Restaurant</Filter>
     </Text>
   </ItemGroup>
 </Project>

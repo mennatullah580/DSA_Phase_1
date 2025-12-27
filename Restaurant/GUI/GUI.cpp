@@ -1,4 +1,8 @@
 #include "GUI.h"
+#include <fstream>
+#include <iostream>
+
+#include <sstream>
 
 //////////////////////////////////////////////////////////////////////////////////////////
 GUI::GUI()
@@ -58,14 +62,25 @@ string GUI::GetString() const
 // ================================== OUTPUT FUNCTIONS ===================================
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void GUI::PrintMessage(string msg) const	//Prints a message on status bar
+void GUI::PrintMessage(string msg) const
 {
-	ClearStatusBar();	//First clear the status bar
-	
+	ClearStatusBar();
+
 	pWind->SetPen(DARKRED);
-	pWind->SetFont(18, BOLD , BY_NAME, "Arial");   
-	pWind->DrawString(10, WindHeight - (int) (StatusBarHeight/1.5), msg); // You may need to change these coordinates later 
-	                                                                      // to be able to write multi-line
+	pWind->SetFont(16, BOLD, BY_NAME, "Arial");
+
+	int x = 10;
+	int y = WindHeight - StatusBarHeight + 10; // top el status bar
+	int lineHeight = 20;
+
+	// n-split el msg b lines gdeda 
+	stringstream ss(msg);
+	string line;
+
+	while (getline(ss, line)) {
+		pWind->DrawString(x, y, line);
+		y += lineHeight;
+	}
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 void GUI::DrawString(const int iX, const int iY, const string Text)
@@ -285,3 +300,5 @@ PROG_MODE	GUI::getGUIMode() const
 	
 	return Mode;
 }
+
+

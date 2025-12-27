@@ -1,18 +1,10 @@
-#ifndef __RESTAURANT_H_
-#define __RESTAURANT_H_
-
+#ifndef _RESTAURANT_H
+#define _RESTAURANT_H
 #include "..\Defs.h"
-
 #include "..\CMUgraphicsLib\CMUgraphics.h"
-
 #include "..\GUI\GUI.h"
-
-
 #include "..\Events\Event.h"
-
-
 #include "Order.h"
-
 #include "Cook.h"
 
 //data structures needed for the project:
@@ -34,25 +26,27 @@ class Restaurant
 private:
 	GUI* pGUI;
 	Queue<Event*> EventsQueue;	//Queue of all events that will be loaded from file
-	/*priQueue<Order*> VIP_waiting;*/
-	Queue<Order*> Vegan_waiting;
-	Queue<Order*> Normal_waiting;
-	Queue<Order*> In_Service;
-	ArrayStack<Order*> Serviced;
-	Queue<Cook*> VIP_cook;
-	Queue<Cook*> Vegan_cook;
-	Queue<Cook*> Normal_cook;
-	/*priQueue<Cook*> In_break;*/
-	/// ==> 
-	//	DEMO-related members. Should be removed in phases 1&2
-	/*Queue<Order*> DEMO_Queue;*/	//Important: This is just for demo
-	/// ==>
 	
+	LinkedQueue<Order*> normal_orders; //Queue of all normal orders
 	
+	LinkedQueue<Order*> vegan_orders;// Queue of all vegan orders
 	
-	//
-	// TODO: Add More Data Members As Needed
-	//
+	priQueue<Order*> vip_orders; // Queue of all vip orders (requires priority so that is why it is linked)
+	
+	LinkedQueue<Cook*> Normal_cooks; // Queue of all normal cooks
+	
+	LinkedQueue<Cook*> Vegan_cooks; //Queue of all vegan cooks
+	
+	LinkedQueue<Cook*> VIP_cook; // Queue of all VIP cooks
+	
+	LinkedQueue<Order*> inservice_normal_orders; // preparing normal orders queue
+	
+	LinkedQueue<Order*> inservice_Vegan_orders; // preparing vegan orders queue
+	
+	LinkedQueue<Order*> inservice_VIP_orders; // preparing VIP orders queue
+	
+	LinkedQueue<Order*> finished_Orders; // Finished orders queue
+
 
 public:
 
@@ -62,24 +56,20 @@ public:
 
 	void RunSimulation(); //runs the simulation
 
-	void FillDrawingList();
-	void LoadFile(const string& filename);
+	void FillDrawingList(); // presents all queues and current events at current timestep on screen by GUI
 
-	//
-	// TODO: Add More Member Functions As Needed
-	//
+	void LoadFile(const string& filename); // Loads data from text file to be read and registered
 
+	void AddOrder(Order*& pOrd); // Adds orders to correct queue
 
-/// ===================    DEMO-related functions. Should be removed in phases 1&2   ================= 
+	bool CancelOrder(int id); // removes wanted order from queue
 
-	void Just_A_Demo();	//just to show a demo and should be removed in phase1 1 & 2
-	void AddtoDemoQueue(Order* po);	//adds an order to the demo queue
+	double calc_vipweight(int size, double price, int arrival_time); // sused to calculate priority of vip orders
+	
+	Cook* CreateCook(int speed, int breakTime, ORD_TYPE type, int id); // Creates Cook instances to help finish orders
 
-/// ================================================================================================== 
-
-	int calc_vipweight(int size , int price , int arrival_time);
-
-	~Restaurant();
+	
+	~Restaurant(); // destructor
 
 };
 

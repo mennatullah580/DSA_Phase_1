@@ -21,7 +21,7 @@ public:
   
   
     //insert the new node in its correct position according to its priority
-    void enqueue(const T& data, int priority) {
+    void enqueue(const T& data, double priority) {
         count++;
         priNode<T>* newNode = new priNode<T>(data, priority);
 
