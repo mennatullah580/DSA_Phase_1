@@ -67,7 +67,7 @@ public:
 	double calc_vipweight(int size, double price, int arrival_time); // sused to calculate priority of vip orders
 	
 	Cook* CreateCook(int speed, int breakTime, ORD_TYPE type, int id); // Creates Cook instances to help finish orders
-
+	void AssignOrdersToCooks(int currentTimeStep);
 	
 	~Restaurant(); // destructor
 

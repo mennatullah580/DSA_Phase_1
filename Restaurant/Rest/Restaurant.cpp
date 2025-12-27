@@ -6,7 +6,8 @@
 
 #include <sstream>
 using namespace std;
-
+#include"Cook.h"
+#include"Order.h"
 #include "Restaurant.h"
 #include "..\Events\ArrivalEvent.h"
 #include "../CancelEvent.h"
@@ -379,8 +380,134 @@ int GetQueueCount(Q& q)
 
 	return cnt;
 }
+void Restaurant::AssignOrdersToCooks(int currentTimeStep)
+{
+	// vip->normal->vegan
 
-// special version for VIP priority queue
+	while (!vip_orders.isEmpty())
+	{
+		Order* vipOrder = nullptr;
+		int priority = 0;
+
+		// ba3ml highest priority ll VIP order
+		if (!vip_orders.peek(vipOrder, priority))
+			break;
+
+		Cook* assignedCook = nullptr;
+
+		// ba3ml VIP cook elawl
+		if (VIP_cook.dequeue(assignedCook))
+		{
+			// VIP cook is available
+			vip_orders.dequeue(vipOrder, priority); // bashel order mn elwaiting
+			vipOrder->setStatus(SRV);
+			vipOrder->setArrTime(currentTimeStep); //  service start time
+			inservice_VIP_orders.enqueue(vipOrder);
+
+			// Return cook to queue			
+			VIP_cook.enqueue(assignedCook);
+			continue;
+		}
+
+		// Try Normal cook if VIP cook not available
+		if (Normal_cooks.dequeue(assignedCook))
+		{
+			vip_orders.dequeue(vipOrder, priority);
+			vipOrder->setStatus(SRV);
+			vipOrder->setArrTime(currentTimeStep);
+			inservice_VIP_orders.enqueue(vipOrder);
+
+			Normal_cooks.enqueue(assignedCook);
+			continue;
+		}
+
+		// Try Vegan cook as last resort
+		if (Vegan_cooks.dequeue(assignedCook))
+		{
+			vip_orders.dequeue(vipOrder, priority);
+			vipOrder->setStatus(SRV);
+			vipOrder->setArrTime(currentTimeStep);
+			inservice_VIP_orders.enqueue(vipOrder);
+
+			Vegan_cooks.enqueue(assignedCook);
+			continue;
+		}
+
+		// No cook available, order must wait
+		break;
+	}
+
+	//vegan baas
+
+	while (!vegan_orders.isEmpty())
+	{
+		Order* veganOrder = nullptr;
+
+		// Check if vegan order exists
+		if (!vegan_orders.peek(veganOrder))
+			break;
+
+		Cook* assignedCook = nullptr;
+
+		// Try to get Vegan cook
+		if (Vegan_cooks.dequeue(assignedCook))
+		{
+			vegan_orders.dequeue(veganOrder); // Remove from waiting
+			veganOrder->setStatus(SRV);
+			veganOrder->setArrTime(currentTimeStep);
+			inservice_Vegan_orders.enqueue(veganOrder);
+
+			Vegan_cooks.enqueue(assignedCook);
+			continue;
+		}
+
+		// No Vegan cook available, order must wait
+		break;
+	}
+
+	//normal  l  vip mn 8er vegan
+
+	while (!normal_orders.isEmpty())
+	{
+		Order* normalOrder = nullptr;
+
+		// Check if normal order exists
+		if (!normal_orders.peek(normalOrder))
+			break;
+
+		Cook* assignedCook = nullptr;
+
+		// Try Normal cook first
+		if (Normal_cooks.dequeue(assignedCook))
+		{
+			normal_orders.dequeue(normalOrder);
+			normalOrder->setStatus(SRV);
+			normalOrder->setArrTime(currentTimeStep);
+			inservice_normal_orders.enqueue(normalOrder);
+
+			Normal_cooks.enqueue(assignedCook);
+			continue;
+		}
+
+		// Try VIP cook if Normal cook not available
+		if (VIP_cook.dequeue(assignedCook))
+		{
+			normal_orders.dequeue(normalOrder);
+			normalOrder->setStatus(SRV);
+			normalOrder->setArrTime(currentTimeStep);
+			inservice_normal_orders.enqueue(normalOrder);
+
+			VIP_cook.enqueue(assignedCook);
+			continue;
+		}
+
+		// mafesh cook available (Vegan cooks mayenfa3sh te3ml Normal orders)
+		break;
+	}
+}
+
+
+
 int GetVIPQueueCount(priQueue<Order*>& q)
 {
 	Order* ptr = nullptr;
@@ -424,7 +551,7 @@ void Restaurant::RunSimulation()
 			Sleep(1000);
 		}
 	}
-	
+
 	// load file yenaam el cooks w el events
 	LoadFile(filename);
 
@@ -472,23 +599,23 @@ void Restaurant::RunSimulation()
 		if (TimeStep % 5 == 0)
 		{
 			Order* p = nullptr;
-			if (inservice_normal_orders.dequeue(p)) 
-			{ 
+			if (inservice_normal_orders.dequeue(p))
+			{
 				p->setStatus(DONE); finished_Orders.enqueue(p);
 			}
-			if (inservice_Vegan_orders.dequeue(p)) 
-			{ 
-				p->setStatus(DONE); finished_Orders.enqueue(p); 
+			if (inservice_Vegan_orders.dequeue(p))
+			{
+				p->setStatus(DONE); finished_Orders.enqueue(p);
 			}
-			if (inservice_VIP_orders.dequeue(p)) 
-			{ 
+			if (inservice_VIP_orders.dequeue(p))
+			{
 				p->setStatus(DONE); finished_Orders.enqueue(p);
 			}
 		}
 
 
 		// 4) n-update el GUI
-		FillDrawingList(); 
+		FillDrawingList();
 
 		// 5) bn-build el message bta3 el status
 		int waitingNorm = GetQueueCount<LinkedQueue<Order*>, Order*>(normal_orders);
@@ -498,7 +625,7 @@ void Restaurant::RunSimulation()
 		int cookVeg = GetQueueCount<LinkedQueue<Cook*>, Cook*>(Vegan_cooks);
 		int cookVIP = GetQueueCount<LinkedQueue<Cook*>, Cook*>(VIP_cook);
 
-		
+
 		int inServiceN = GetQueueCount<LinkedQueue<Order*>, Order*>(inservice_normal_orders);
 		int inServiceG = GetQueueCount<LinkedQueue<Order*>, Order*>(inservice_Vegan_orders);
 		int inServiceV = GetQueueCount<LinkedQueue<Order*>, Order*>(inservice_VIP_orders);
@@ -511,7 +638,7 @@ void Restaurant::RunSimulation()
 		ss << "In-service -> N:" << inServiceN << "  G:" << inServiceG << "  V:" << inServiceV
 			<< "   Finished: " << finishedC;
 
-		
+
 		pGUI->PrintMessage(ss.str());
 
 		// 6) lw mafish events w mafish orders yb2a el simulation 5elset
@@ -544,6 +671,7 @@ void Restaurant::RunSimulation()
 		TimeStep++;
 	}
 
+
 	// message fe el end
 	pGUI->PrintMessage("simulation done! all orders processed.");
 	pGUI->waitForClick();
@@ -551,3 +679,4 @@ void Restaurant::RunSimulation()
 	delete pGUI;
 	pGUI = nullptr;
 }
+
